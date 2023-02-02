@@ -5,14 +5,18 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/home'
+      redirect: '/DataManagement'
     },
     {
-      path: '/home',
-      name: 'home',
-      component: () => import('@/views/home.vue'),
+      path: '/DataManagement',
+      name: 'DataManagement',
+      component: () => import('@/views/dataManagement/DataManagement.vue'),
     },
-   
+    {
+      path: '/PanelControl',
+      name: 'PanelControl',
+      component: () => import('@/views/panelControl/PanelControl.vue'),
+    }
   ]
 })
 

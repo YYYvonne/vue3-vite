@@ -1,20 +1,22 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import Components from 'unplugin-vue-components/vite';
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
 // const child_process = require("child_process");
 // process.env.VITE_APP_TITLE = child_process.execSync("git rev-parse --short HEAD").toString().trim()
 // console.log(process.env.VITE_TITLE)
 //利用child_process执行shell拿到git commit id,有时我们项目上线后需要commit id 去追踪错误 
-// const child_process = require('child_process')
-// const commitHash = child_process.execSync('git rev-parse --short HEAD').toString().trim()
+const child_process = require('child_process')
+const commitHash = child_process.execSync('git rev-parse --short HEAD').toString().trim()
 
-export default ({ command, mode } :any) => {
+export default ({ command, mode }: any) => {
   /*
    console.log(command, mode)
   * serve serve-dev
   * */
- const env = loadEnv(mode, process.cwd(), '')
+  const env = loadEnv(mode, process.cwd(), '')
   return {
     /**
     配置基础路径
@@ -28,10 +30,10 @@ export default ({ command, mode } :any) => {
       //修复引入path模块时报错问题
       'process.platform': null,
       'process.version': null,
-      //GLOBAL_VAR为定义的全局变量，可以直接在页面是哪个访问GLOBAL_VAR获取定义的变量
-      // GLOBAL_VAR: {
-      //   GIT_COMMIT_ID: commitHash
-      // }
+      // GLOBAL_VAR为定义的全局变量，可以直接在页面是哪个访问GLOBAL_VAR获取定义的变量
+      GLOBAL_VAR: {
+        GIT_COMMIT_ID: commitHash
+      }
     },
     //设为 false 可以避免 Vite 清屏而错过在终端中打印某些关键信息
     clearScreen: false,
@@ -59,7 +61,10 @@ export default ({ command, mode } :any) => {
     //plugins：插件配置相关
     plugins: [
       //vue3相关插件
-      vue()
+      vue(),
+      Components({
+        resolvers: [AntDesignVueResolver()],
+      }),
     ],
     //构建相关
     build: {
