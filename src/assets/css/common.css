@@ -1,0 +1,9 @@
+:root {
+    --primary-color:  #1890ff;
+    --border-color: rgb(139, 134, 134)
+}
+
+body {
+    font: 14px;
+    /* font-family: 'Courier New', Courier, monospace; */
+}
