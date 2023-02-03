@@ -82,13 +82,13 @@ function getId(id: string) {
   panelId.value = deepObj(panel_lib.value, id);
   panelArray.value = deepObj(panel_lib.value, panelId.value);
 }
-//页面刷新处理
-const router = useRouter()
-window.onbeforeunload = function(e) {
-  router.push({
-            path: '/DataManagement'
-        })
-}
+// 页面刷新处理
+// const router = useRouter()
+// window.onunload = function(e) {
+//   router.push({
+//             path: '/DataManagement'
+//         })
+// }
 </script>
 
 <style lang="less" scoped>

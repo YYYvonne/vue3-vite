@@ -5,7 +5,7 @@
       <div class="loadTitle">
         <label for="uload">导入数据：</label>
       </div>
-      <a-upload id="uload" accept=".json, application/JSON" v-model:file-list="fileList" :showUploadList="false"
+      <a-upload id="uload" accept=".json,application/JSON" v-model:file-list="fileList" :showUploadList="false"
         :customRequest="upload_json" :maxCount="1">
         <a-button>
           <upload-outlined />
@@ -16,7 +16,7 @@
 
     <!-- 拖拽导入数据 -->
     <div class="dragger">
-      <a-upload-dragger accept=".json, application/JSON" :customRequest="upload_json" :maxCount="1"
+      <a-upload-dragger accept=".json,application/JSON" :customRequest="upload_json" :maxCount="1"
         v-model:file-list="fileList">
         <p class="ant-upload-drag-icon"><upload-outlined /></p>
         <p>Click or drag JSON file to this area to upload</p>
@@ -46,7 +46,6 @@ import { custom_upload, str2file } from '@/utils/strUtils';
 import { ref } from 'vue';
 import { UploadOutlined, DownloadOutlined } from '@ant-design/icons-vue';
 import usePanelStore from '@/stores/panelData';
-import { storeToRefs } from 'pinia';
 
 const root = ref<any>({});
 const jsonExt = '.json';
@@ -69,7 +68,6 @@ const upload_json = async (info: any) => await custom_upload(info, (res: any) =>
 const down_json = () => Object.keys(root.value).length && str2file(JSON.stringify(root.value[Object.keys(root.value)[0]], null, indentSpace), Object.keys(root.value)[0] + jsonExt);
 //发送数据到store获取panel数据
 const panelStore = usePanelStore()
-const { panel_lib } = storeToRefs(panelStore)
 panelStore.$patch(state => state.jsonData = root.value)
 
 </script>

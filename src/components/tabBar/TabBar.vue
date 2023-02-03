@@ -29,10 +29,11 @@ const activeKey = ref(0)
 const panelStore = usePanelStore()
 const { panel_lib } = storeToRefs(panelStore)
 
+console.log(panel_lib.value === undefined)
 //tabBar路由索引
 const router = useRouter()
 function changeRoute(index: any) {
-    if (panel_lib.value == undefined) {
+    if (panel_lib.value === undefined) {
         router.push({
             path: '/DataManagement'
         })
