@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import { custom_upload, str2file } from '@/utils/strUtils';
-import { ref } from 'vue';
+import { ref,watch } from 'vue';
 import { UploadOutlined, DownloadOutlined } from '@ant-design/icons-vue';
 import usePanelStore from '@/stores/panelData';
 
@@ -69,7 +69,11 @@ const down_json = () => Object.keys(root.value).length && str2file(JSON.stringif
 //发送数据到store获取panel数据
 const panelStore = usePanelStore()
 panelStore.$patch(state => state.jsonData = root.value)
-
+watch(root, ()=> {
+  console.log(!root.value)
+},{
+  deep:true
+})
 </script>
 
 <style lang="less" scoped>

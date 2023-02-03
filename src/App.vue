@@ -13,7 +13,6 @@
   <script setup lang="ts">
   import CopyRight from '@/components/copyRight/CopyRight.vue';
   import TabBar from '@/components/tabBar/TabBar.vue';
-  
   </script>
   
   <style lang="less" scoped>

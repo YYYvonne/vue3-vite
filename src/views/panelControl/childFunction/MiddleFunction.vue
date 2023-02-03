@@ -76,7 +76,7 @@ const idmapItem = ref({});
 
 const panelStore = usePanelStore();
 const { panel_lib } = storeToRefs(panelStore);
-if(panel_lib.value) var idmap = deepObj(panel_lib.value, "idmap");
+let idmap = deepObj(panel_lib.value, "idmap");
 
 //处理新增事件
 function handlePlus() {

@@ -32,14 +32,14 @@ import { ref } from "vue";
 
 const id = ref<any>([]);
 const idFilter = ref([]);
-const currentIndex = ref(0);
+const currentIndex = ref<number>(0);
 const emits = defineEmits(["getProductId"]);
 
 //对idmap数据进行处理
 const panelStore = usePanelStore();
 const { panel_lib } = storeToRefs(panelStore);
 panelStore.getPanel;
-if(panel_lib.value) { var { idmap } = panel_lib.value}
+let { idmap } = panel_lib.value
 if (idmap) {
   const keys = Object.keys(idmap);
   id.value = [...keys];

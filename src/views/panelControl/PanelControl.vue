@@ -15,7 +15,6 @@ import usePanelStore from "@/stores/panelData";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import deepObj from "@/utils/getDeepObject"
-import { useRouter } from 'vue-router';
 
 const productId = ref<string>("MAC3LC - 8CB16GS4XS - V2");
 const panelId = ref<string>("RTL_8CB20GS_1");
@@ -82,13 +81,7 @@ function getId(id: string) {
   panelId.value = deepObj(panel_lib.value, id);
   panelArray.value = deepObj(panel_lib.value, panelId.value);
 }
-// 页面刷新处理
-// const router = useRouter()
-// window.onunload = function(e) {
-//   router.push({
-//             path: '/DataManagement'
-//         })
-// }
+
 </script>
 
 <style lang="less" scoped>

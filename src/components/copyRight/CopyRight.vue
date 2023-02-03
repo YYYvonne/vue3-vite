@@ -14,7 +14,9 @@ gitRight.value = GLOBAL_VAR.GIT_COMMIT_ID;
 console.log(time)
 watch(gitRight, () => {
   time.value = getNowTime();
-  console.log('first')
+  console.log('copyRight change')
+},{
+  deep:true
 });
 
 function getNowTime() {
