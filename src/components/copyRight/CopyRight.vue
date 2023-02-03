@@ -11,8 +11,10 @@ const time = ref<string>("2023-02-02 01:44:03");
 
 gitRight.value = GLOBAL_VAR.GIT_COMMIT_ID;
 // console.log(GLOBAL_VAR);
-watch(GLOBAL_VAR.GIT_COMMIT_ID, () => {
+console.log(time)
+watch(gitRight, () => {
   time.value = getNowTime();
+  console.log('first')
 });
 
 function getNowTime() {
