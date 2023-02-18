@@ -15,6 +15,7 @@ declare module '@vue/runtime-core' {
     AUpload: typeof import('ant-design-vue/es')['Upload']
     AUploadDragger: typeof import('ant-design-vue/es')['UploadDragger']
     CopyRight: typeof import('./src/components/copyRight/CopyRight.vue')['default']
+    Drag: typeof import('./src/components/drag.vue')['default']
     PortIcon: typeof import('./src/components/portIcon/PortIcon.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

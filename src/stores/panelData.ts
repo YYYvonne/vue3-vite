@@ -1,15 +1,25 @@
 import { defineStore } from "pinia";
+import { getJsonDataApi } from "@/service/GetJsonData";
 
 const usePanelStore = defineStore("panel", {
     state: () => ({
-        jsonData: <any>{},
-        panel_lib: <any>{},
+        panel_lib: <any>{}
     }),
-
-    getters: {
-        getPanel(state) {
-            state.panel_lib = state.jsonData.panel_lib
+    actions: {
+        async getPanelLib(payload: any) {
+            // console.log("pinia", payload)
+            if (JSON.stringify(payload) === "{}") {
+                const res = await getJsonDataApi();
+                this.panel_lib = res;
+                // console.log('pinia2', this.panel_lib)
+            } else {
+                // console.log("this step over", payload)
+                this.panel_lib = payload;
+            }
         },
+        persist: {
+            enabled: true, // 开启数据缓存
+        }
     }
 });
 

@@ -2,23 +2,13 @@
   <div class="productId">
     <!-- 搜索框 -->
     <div class="searchBar">
-      <a-input-search
-        placeholder="请输入产品ID"
-        enter-button
-        allow-clear
-        style="width: 90%"
-        @search="onSearch"
-        @change="inputChange"
-      />
+      <a-input-search placeholder="请输入产品ID" enter-button allow-clear style="width: 90%" @search="onSearch"
+        @change="inputChange" />
     </div>
 
     <!-- 产品ID -->
     <template v-for="(productId, index) in idFilter" :key="productId">
-      <div
-        class="productIdMap"
-        :class="{ active: index === currentIndex }"
-        @click="idClick(productId, index)"
-      >
+      <div class="productIdMap" :class="{ active: index === currentIndex }" @click="idClick(productId, index)">
         {{ productId }}
       </div>
     </template>
@@ -27,31 +17,38 @@
 
 <script setup lang="ts">
 import usePanelStore from "@/stores/panelData";
+import deepObj from "@/utils/getDeepObject";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 
 const id = ref<any>([]);
 const idFilter = ref([]);
-const currentIndex = ref<number>(0);
+const currentIndex = ref(0);
 const emits = defineEmits(["getProductId"]);
 
 //对idmap数据进行处理
 const panelStore = usePanelStore();
 const { panel_lib } = storeToRefs(panelStore);
-panelStore.getPanel;
-let { idmap } = panel_lib.value
-if (idmap) {
+let idmap = computed(() => deepObj(panel_lib.value, "idmap"));
+
+onMounted(() => {
+  getFilter(idmap.value)
+})
+watch(idmap, () => {
+  getFilter(idmap.value)
+}, { deep: true })
+function getFilter(idmap) {
   const keys = Object.keys(idmap);
   id.value = [...keys];
   idFilter.value = id.value;
 }
-
 //搜索框搜索功能
 function onSearch(searchValue: string) {
   if (searchValue)
     idFilter.value = id.value.filter((item: string) =>
       item.includes(searchValue.toLocaleUpperCase())
     );
+  return idFilter.value
 }
 function inputChange(value: any) {
   if (value.data === null || value.data === undefined) {
@@ -61,6 +58,7 @@ function inputChange(value: any) {
       item.includes(value.data.toLocaleUpperCase())
     );
   }
+  return idFilter.value
 }
 
 //处理productId点击事件
@@ -71,7 +69,7 @@ function idClick(iId: string, index: number) {
 </script>
 <style lang="less" scoped>
 .productId {
-  width: 240px;
+  width: 18%;
   height: 75%;
   border: 1px solid var(--border-color);
   overflow-y: auto;
@@ -103,6 +101,9 @@ function idClick(iId: string, index: number) {
     margin-top: 10px;
     padding-left: 10px;
     padding-top: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .active {

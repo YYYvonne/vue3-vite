@@ -1,32 +1,34 @@
-import axios, { type AxiosRequestConfig } from 'axios';
+//axios简易封装
+import axios from "axios";
 
-declare module 'axios' {
-  interface AxiosInstance {
-    (config: AxiosRequestConfig): Promise<any>
+class axiosRequest {
+  instance: any;
+  constructor(timeout: number) {
+    this.instance = axios.create({
+      timeout,
+    });
+  }
+
+  request(config: any) {
+    return new Promise((resolve, reject) => {
+      this.instance
+        .request(config)
+        .then((res: { data: any }) => {
+          resolve(res.data);
+        })
+        .catch((err: any) => {
+          reject(err);
+        });
+    });
+  }
+
+  get(config: any) {
+    return this.request({ ...config, method: "get" });
+  }
+
+  post(config: any) {
+    return this.request({ ...config, method: "post" });
   }
 }
-const service = axios.create({
-  baseURL: '',
-  timeout: 10000,
-});
-// 请求拦截
-service.interceptors.request.use(
-  (config: any) => {
-    return config;
-  },
-  (error: any) => {
-    return Promise.reject(error);
-  },
-);
-// 响应拦截
-service.interceptors.response.use(
-  (response: any) => {
-    const res = response.data;
-    return Promise.resolve(res);
-  },
-  (error: any) => {
-    return Promise.reject(error);
-  },
-);
 
-export default service;
+export default new axiosRequest(1000);

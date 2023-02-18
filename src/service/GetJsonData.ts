@@ -1,8 +1,7 @@
-import $axiosJson from '@/service/index'; 
+import getAxiosJson from '@/service/index';
 // 获取本地json数据
-export const getJsonDataApi = () => {
-  return $axiosJson({
-    url: '/data/panel_lib.json',
-    method: 'GET',
+export function getJsonDataApi() {
+  return getAxiosJson.get({
+    url: '/data/panel_lib.json'
   });
 };

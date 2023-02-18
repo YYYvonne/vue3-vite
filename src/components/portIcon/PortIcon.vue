@@ -46,6 +46,8 @@ function onclick() {
 <style scoped>
 .port {
   display: flex;
+  cursor: move;
+  cursor: -webkit-grabbing;
 }
 
 .padding_slot {

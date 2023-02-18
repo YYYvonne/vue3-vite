@@ -13,9 +13,9 @@ const router = createRouter({
       component: () => import('@/views/dataManagement/DataManagement.vue'),
     },
     {
-      path: '/PanelControl',
-      name: 'PanelControl',
-      component: () => import('@/views/panelControl/PanelControl.vue'),
+      path: '/PanelCommand',
+      name: 'PanelCommand',
+      component: () => import('@/views/panelCommand/PanelCommand.vue'),
     }
   ]
 })

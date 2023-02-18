@@ -1,60 +1,56 @@
 <template>
     <div class="tabBar">
-        <a-tabs v-model:activeKey="activeKey" @change="changeRoute">
-            <template v-for="(item, index) in tabBarData" :key="index">
-                <a-tab-pane :tab=item.tab></a-tab-pane>
-            </template>
-        </a-tabs>
+      <a-tabs v-model:activeKey="activeKey" @change="changeRoute">
+        <a-tab-pane v-for="(item, index) in tabBarData" :tab="item.tab" :key="index">
+        </a-tab-pane>
+      </a-tabs>
     </div>
-</template>
-
-<script setup lang="ts">
-import usePanelStore from '@/stores/panelData';
-import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-
-const tabBarData = ref([
+  </template>
+  
+  <script setup lang="ts">
+  import { ref, watch } from "vue";
+  import { useRouter } from "vue-router";
+  
+  const tabBarData = ref([
     {
-        tab: '数据管理',
-        path: '/DataManagement'
+      tab: "面板管理",
+      path: "/PanelCommand",
     },
     {
-        tab: '面板管理',
-        path: '/PanelControl'
+      tab: "数据管理",
+      path: "/DataManagement",
+    },
+  ]);
+  const activeKey = ref();
+  
+  //tabBar路由索引
+  const router = useRouter();
+  function changeRoute(activeIndex: any) {
+    router.push({
+      path: tabBarData.value[activeIndex].path,
+    });
+  }
+  watch(
+    () => router.currentRoute.value,
+    (newRoute: any) => {
+      const index = tabBarData.value.findIndex(
+        (item) => item.path === newRoute.path
+      );
+      if (index !== -1) {
+        return (activeKey.value = index);
+      }
     }
-])
-const activeKey = ref(0)
-
-const panelStore = usePanelStore()
-const { panel_lib } = storeToRefs(panelStore)
-
-console.log(panel_lib.value === undefined)
-//tabBar路由索引
-const router = useRouter()
-function changeRoute(index: any) {
-    if (panel_lib.value === undefined) {
-        router.push({
-            path: '/DataManagement'
-        })
-        window.alert('请上传文件')
-        activeKey.value = 0
-    } else {
-        router.push({
-            path: tabBarData.value[index].path
-        })
-    }
-}
-
-</script>
-
-<style lang="less" scoped>
-.tabBar {
+  );
+  </script>
+  
+  <style lang="less" scoped>
+  .tabBar {
     margin-left: 1%;
-
+  
     :deep(.ant-tabs-tab) {
-        font-size: 20px;
-        font-weight: 600;
+      font-size: 20px;
+      font-weight: 600;
     }
-}
-</style>
+  }
+  </style>
+  

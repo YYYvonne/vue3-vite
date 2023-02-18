@@ -8,17 +8,16 @@
 </template>
 
 <script setup lang="ts">
-import ProducId from "@/views/panelControl/childFunction/ProductId.vue";
-import MiddleFunction from "@/views/panelControl/childFunction/MiddleFunction.vue";
-import PanelComponent from "@/views/panelControl/childFunction/PanelComponent.vue";
+import ProducId from "@/views/panelCommand/childFunction/ProductId.vue";
+import MiddleFunction from "@/views/panelCommand/childFunction/MiddleFunction.vue";
+import PanelComponent from "@/views/panelCommand/childFunction/PanelComponent.vue";
 import usePanelStore from "@/stores/panelData";
-import { storeToRefs } from "pinia";
 import { ref } from "vue";
-import deepObj from "@/utils/getDeepObject"
+import deepObj from "@/utils/getDeepObject";
 
 const productId = ref<string>("MAC3LC - 8CB16GS4XS - V2");
 const panelId = ref<string>("RTL_8CB20GS_1");
-const panelArray = ref<any>([
+const panelArray = ref([
   [
     { hwtype: "None" },
     { hwtype: "None" },
@@ -74,14 +73,11 @@ const panelArray = ref<any>([
 ]);
 
 const panelStore = usePanelStore();
-const { panel_lib } = storeToRefs(panelStore);
-
 function getId(id: string) {
   productId.value = id;
-  panelId.value = deepObj(panel_lib.value, id);
-  panelArray.value = deepObj(panel_lib.value, panelId.value);
+  panelId.value = deepObj(panelStore.panel_lib, id);
+  panelArray.value = deepObj(panelStore.panel_lib, panelId.value);
 }
-
 </script>
 
 <style lang="less" scoped>
