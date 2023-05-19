@@ -2,13 +2,23 @@
   <div class="productId">
     <!-- 搜索框 -->
     <div class="searchBar">
-      <a-input-search placeholder="请输入产品ID" enter-button allow-clear style="width: 90%" @search="onSearch"
-        @change="inputChange" />
+      <a-input-search
+        placeholder="请输入产品ID"
+        enter-button
+        allow-clear
+        style="width: 90%"
+        @search="onSearch"
+        @change="inputChange"
+      />
     </div>
 
     <!-- 产品ID -->
     <template v-for="(productId, index) in idFilter" :key="productId">
-      <div class="productIdMap" :class="{ active: index === currentIndex }" @click="idClick(productId, index)">
+      <div
+        class="productIdMap"
+        :class="{ active: index === currentIndex }"
+        @click="idClick(productId, index)"
+      >
         {{ productId }}
       </div>
     </template>
@@ -16,99 +26,103 @@
 </template>
 
 <script setup lang="ts">
-import usePanelStore from "@/stores/panelData";
-import deepObj from "@/utils/getDeepObject";
-import { storeToRefs } from "pinia";
-import { ref, watch, computed, onMounted } from "vue";
+  import usePanelStore from '@/stores/panelData';
+  import deepObj from '@/utils/getDeepObject';
+  import { storeToRefs } from 'pinia';
+  import { ref, watch, computed, onMounted } from 'vue';
 
-const id = ref<any>([]);
-const idFilter = ref([]);
-const currentIndex = ref(0);
-const emits = defineEmits(["getProductId"]);
+  const id = ref<any>([]);
+  const idFilter = ref([]);
+  const currentIndex = ref(0);
+  const emits = defineEmits(['getProductId']);
 
-//对idmap数据进行处理
-const panelStore = usePanelStore();
-const { panel_lib } = storeToRefs(panelStore);
-let idmap = computed(() => deepObj(panel_lib.value, "idmap"));
+  //对idmap数据进行处理
+  const panelStore = usePanelStore();
+  const { panel_lib } = storeToRefs(panelStore);
+  let idmap = computed(() => deepObj(panel_lib.value, 'idmap'));
 
-onMounted(() => {
-  getFilter(idmap.value)
-})
-watch(idmap, () => {
-  getFilter(idmap.value)
-}, { deep: true })
-function getFilter(idmap) {
-  const keys = Object.keys(idmap);
-  id.value = [...keys];
-  idFilter.value = id.value;
-}
-//搜索框搜索功能
-function onSearch(searchValue: string) {
-  if (searchValue)
-    idFilter.value = id.value.filter((item: string) =>
-      item.includes(searchValue.toLocaleUpperCase())
-    );
-  return idFilter.value
-}
-function inputChange(value: any) {
-  if (value.data === null || value.data === undefined) {
+  onMounted(() => {
+    getFilter(idmap.value);
+  });
+  watch(
+    idmap,
+    () => {
+      getFilter(idmap.value);
+    },
+    { deep: true },
+  );
+  function getFilter(idmap) {
+    const keys = Object.keys(idmap);
+    id.value = [...keys];
     idFilter.value = id.value;
-  } else {
-    idFilter.value = id.value.filter((item: string) =>
-      item.includes(value.data.toLocaleUpperCase())
-    );
   }
-  return idFilter.value
-}
+  //搜索框搜索功能
+  function onSearch(searchValue: string) {
+    if (searchValue)
+      idFilter.value = id.value.filter((item: string) =>
+        item.includes(searchValue.toLocaleUpperCase()),
+      );
+    return idFilter.value;
+  }
+  function inputChange(value: any) {
+    if (value.data === null || value.data === undefined) {
+      idFilter.value = id.value;
+    } else {
+      idFilter.value = id.value.filter((item: string) =>
+        item.includes(value.data.toLocaleUpperCase()),
+      );
+    }
+    return idFilter.value;
+  }
 
-//处理productId点击事件
-function idClick(iId: string, index: number) {
-  currentIndex.value = index;
-  emits("getProductId", iId);
-}
+  //处理productId点击事件
+  function idClick(iId: string, index: number) {
+    currentIndex.value = index;
+    emits('getProductId', iId);
+  }
 </script>
 <style lang="less" scoped>
-.productId {
-  width: 18%;
-  height: 75%;
-  border: 1px solid var(--border-color);
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-bottom: 2%;
+  .productId {
+    width: 18%;
+    height: 75%;
+    border: 1px solid var(--border-color);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 2%;
 
-  .searchBar {
-    position: sticky;
-    top: -1px;
-    height: 7%;
-    width: 100%;
-    margin-left: 5%;
-    margin-top: 7%;
-    margin-bottom: -15px;
+    .searchBar {
+      position: sticky;
+      top: -1px;
+      height: 7%;
+      width: 100%;
+      margin-left: 5%;
+      margin-top: 7%;
+      margin-bottom: -15px;
 
-    .ant-btn-primary {
-      border-color: var(--primary-color);
+      .ant-btn-primary {
+        border-color: var(--primary-color);
+        background-color: var(--primary-color);
+      }
+
+      .ant-input-suffix {
+        margin-right: -15px;
+      }
+    }
+
+    .productIdMap {
+      height: 35px;
+      font-size: 14px;
+      margin-top: 10px;
+      padding-left: 10px;
+      padding-top: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .active {
+      transition: background-color 0.3s ease;
       background-color: var(--primary-color);
     }
-
-    .ant-input-suffix {
-      margin-right: -15px;
-    }
   }
-
-  .productIdMap {
-    height: 35px;
-    font-size: 14px;
-    margin-top: 10px;
-    padding-left: 10px;
-    padding-top: 6px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .active {
-    transition: background-color 0.3s ease;
-    background-color: var(--primary-color);
-  }
-}
 </style>

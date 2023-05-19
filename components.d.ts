@@ -12,7 +12,6 @@ declare module '@vue/runtime-core' {
     AInputSearch: typeof import('ant-design-vue/es')['InputSearch']
     ATabPane: typeof import('ant-design-vue/es')['TabPane']
     ATabs: typeof import('ant-design-vue/es')['Tabs']
-    AUpload: typeof import('ant-design-vue/es')['Upload']
     AUploadDragger: typeof import('ant-design-vue/es')['UploadDragger']
     CopyRight: typeof import('./src/components/copyRight/CopyRight.vue')['default']
     Drag: typeof import('./src/components/drag.vue')['default']
