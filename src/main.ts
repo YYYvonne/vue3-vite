@@ -1,12 +1,9 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import pinia from './stores'
+import { createApp } from 'vue';
+import App from './App.vue';
+import { router } from './router';
+import pinia from './stores';
+import './assets/css/index.css';
+import 'ant-design-vue/dist/antd.css';
 
-import 'normalize.css'
-import './assets/css/index.css'
-
-const app = createApp(App)
-
-
-app.use(router).use(pinia).mount('#app')
+const app = createApp(App);
+app.use(router).use(pinia).mount('#app');

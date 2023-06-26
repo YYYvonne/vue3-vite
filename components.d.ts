@@ -7,17 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AButton: typeof import('ant-design-vue/es')['Button']
-    AInput: typeof import('ant-design-vue/es')['Input']
-    AInputSearch: typeof import('ant-design-vue/es')['InputSearch']
-    ATabPane: typeof import('ant-design-vue/es')['TabPane']
-    ATabs: typeof import('ant-design-vue/es')['Tabs']
-    AUploadDragger: typeof import('ant-design-vue/es')['UploadDragger']
-    CopyRight: typeof import('./src/components/copyRight/CopyRight.vue')['default']
-    Drag: typeof import('./src/components/drag.vue')['default']
-    PortIcon: typeof import('./src/components/portIcon/PortIcon.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TabBar: typeof import('./src/components/tabBar/TabBar.vue')['default']
   }
 }

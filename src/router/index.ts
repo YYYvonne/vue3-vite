@@ -1,23 +1,31 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteConfigs } from '@/types';
+import { t } from '@/lang/zh';
 
+const routes = <RouteConfigs>[
+  {
+    path: '/',
+    redirect: '/product',
+  },
+  {
+    path: '/product',
+    name: 'product',
+    component: () => import('@/views/product.vue'),
+  },
+  {
+    path: '/panel',
+    name: 'panel',
+    component: () => import('@/views/panel.vue'),
+  },
+  {
+    path: '/data',
+    name: 'data',
+    component: () => import('@/views/data.vue'),
+  },
+];
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      redirect: '/DataManagement'
-    },
-    {
-      path: '/DataManagement',
-      name: 'DataManagement',
-      component: () => import('@/views/dataManagement/DataManagement.vue'),
-    },
-    {
-      path: '/PanelCommand',
-      name: 'PanelCommand',
-      component: () => import('@/views/panelCommand/PanelCommand.vue'),
-    }
-  ]
-})
+  routes: routes,
+});
 
-export default router
+export { router, routes };
