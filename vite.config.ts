@@ -2,7 +2,6 @@ import { fileURLToPath, URL } from 'node:url';
 import vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
-import svgLoader from 'vite-svg-loader';
 
 import child_process from 'child_process';
 const commitHash = child_process.execSync('git rev-parse --short HEAD').toString().trim();
@@ -33,7 +32,6 @@ export default () => {
     },
     plugins: [
       vue(),
-      svgLoader(),
       Components({
         resolvers: [AntDesignVueResolver()],
       }),
